@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4602372022942492}
   - component: {fileID: 212821065130191592}
   - component: {fileID: 95098294868498940}
+  - component: {fileID: 114916482181316652}
+  - component: {fileID: 61967122967348894}
   m_Layer: 0
   m_Name: EnemySpaceShip
   m_TagString: Untagged
@@ -35,12 +37,37 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1975703078992116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.4287086, y: 1.8506962, z: 0}
+  m_LocalPosition: {x: -0.36226472, y: 1.4819927, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61967122967348894
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1975703078992116}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.72, y: 0.72}
+    newSize: {x: 0.72, y: 0.72}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 0.4}
+  m_EdgeRadius: 0
 --- !u!95 &95098294868498940
 Animator:
   serializedVersion: 3
@@ -58,6 +85,23 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114916482181316652
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1975703078992116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e88de917f944b968e2b587071fc40e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetFactor: 1
+  parent: {fileID: 0}
+  leftChild: {fileID: 0}
+  rightChild: {fileID: 0}
+  maximumHealth: 0
+  damage: 0
 --- !u!212 &212821065130191592
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour {
     }
   }
 
-  public void TakeDamage(int value) {
+  public void TakeDamage(float value) {
     currentHealth -= value;
     if (currentHealth <= 0) {
       Die();
@@ -59,14 +59,26 @@ public class Enemy : MonoBehaviour {
   }
 
   private void Die() {
-    // TODO: Call `Destroy(gameObject)` with some explosions`
     Debug.Log("DIED");
+    // TODO: Call `Destroy(gameObject)` with some explosions. Also, add some reward.
+    Destroy(gameObject);
   }
 
   public void Heal(int value) {
     currentHealth += value;
     if (currentHealth > maximumHealth) {
       currentHealth = maximumHealth;
+    }
+  }
+
+  void OnCollisionEnter2D(Collision2D other) {
+    if (other.gameObject.tag == "Bullet") {
+      float dmg = other.gameObject.GetComponent<PlayerBullet>().damage;
+      // Destroy the bullet
+      // TODO: Make a mini-explosion?
+      Destroy(other.gameObject);
+      // TODO: Take damage etc.
+      TakeDamage(dmg);
     }
   }
 }

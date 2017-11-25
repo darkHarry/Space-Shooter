@@ -6,15 +6,16 @@ public class PlayerBullet : MonoBehaviour {
 
     // Bullet speed
     float speed;
+    public float damage = 10f;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         speed = 8f;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update ()
     {
         // get the bullet's current pos
         Vector2 pos = transform.position;
@@ -33,5 +34,5 @@ public class PlayerBullet : MonoBehaviour {
         {
             Destroy(gameObject);
         }
-	}
+    }
 }
