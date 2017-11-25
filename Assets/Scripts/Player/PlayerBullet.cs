@@ -20,7 +20,7 @@ public class PlayerBullet : MonoBehaviour {
         // get the bullet's current pos
         Vector2 pos = transform.position;
 
-        // computer bullet's new pos
+        // compute bullet's new pos
         pos = new Vector2(pos.x, pos.y + speed * Time.deltaTime);
 
         // Update bullet's pos
