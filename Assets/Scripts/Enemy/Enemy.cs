@@ -8,10 +8,18 @@ public class Enemy : MonoBehaviour {
   public GameObject leftChild;
   public GameObject rightChild;
 
+  [SerializeField]
+  private float maximumHealth;
+  private float currentHealth;
+  [SerializeField]
+  private float damage;
+
   // Use this for initialization
   void Start () {
     leftChild = null;
     rightChild = null;
+
+    currentHealth = maximumHealth;
   }
 
   // Update is called once per frame
@@ -36,6 +44,26 @@ public class Enemy : MonoBehaviour {
 
       lc.parent = gameObject;
       rc.parent = gameObject;
+    }
+  }
+
+  public void TakeDamage(int value) {
+    currentHealth -= value;
+    if (currentHealth <= 0) {
+      Die();
+      // TODO: Also balance tree
+    }
+  }
+
+  private void Die() {
+    // TODO: Call `Destroy(gameObject)` with some explosions`
+    Debug.Log("DIED");
+  }
+
+  public void Heal(int value) {
+    currentHealth += value;
+    if (currentHealth > maximumHealth) {
+      currentHealth = maximumHealth;
     }
   }
 }
