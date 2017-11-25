@@ -587,12 +587,13 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Collab: 1
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: cb6c2a46-573d-47f2-9b04-576b3bbae979
+  cloudProjectId: def86ff9-a3b7-4e69-bbac-c46cfd56c8b3
   projectName: Space Shooter
-  organizationId: dark_harry
+  organizationId: workshop-071ad5ba-0851-45bc-8e33-27a2b62fffab
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

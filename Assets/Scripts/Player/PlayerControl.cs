@@ -11,14 +11,14 @@ public class PlayerControl : MonoBehaviour {
     // player speed
     public float speed;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
-    
+
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update ()
     {
         // fire bullet when space key pressed
         if (Input.GetKeyDown("space"))
@@ -41,7 +41,7 @@ public class PlayerControl : MonoBehaviour {
 
         // Move player towards the direction
         Move(direction);
-	}
+    }
 
     void Move (Vector2 direction)
     {
