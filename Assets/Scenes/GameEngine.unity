@@ -280,9 +280,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af00301ab53b4c2593169d931a4e5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motherShipPrefab: {fileID: 0}
-  enemyShipPrefab: {fileID: 0}
-  levels: 0
+  motherShipPrefab: {fileID: 4602372022942492, guid: c808098c069b0b14fa30b1a727225b50,
+    type: 2}
+  enemyShipPrefab: {fileID: 4602372022942492, guid: c808098c069b0b14fa30b1a727225b50,
+    type: 2}
+  levels: 2
   motherShipPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1580538644
 Transform:
