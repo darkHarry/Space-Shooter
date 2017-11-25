@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+  [SerializeField]
+  private float offsetFactor = 1f;
+
   public GameObject parent;
   public GameObject leftChild;
   public GameObject rightChild;
@@ -30,9 +33,9 @@ public class Enemy : MonoBehaviour {
   public void AddLevel(int level, Transform childPrefab) {
     if (level > 0) {
       // TODO: Use different values for childPrefab here
-      Vector3 d = Vector3.down * 5;
-      Vector3 l = Vector3.left * 5;
-      Vector3 r = Vector3.right * 5;
+      Vector3 d = Vector3.down * offsetFactor;
+      Vector3 l = Vector3.left * offsetFactor;
+      Vector3 r = Vector3.right * offsetFactor;
 
       leftChild = Instantiate(childPrefab, transform.position + d + l, Quaternion.identity).gameObject;
       rightChild = Instantiate(childPrefab, transform.position + d + r, Quaternion.identity).gameObject;
