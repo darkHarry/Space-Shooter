@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour {
 
-    float speed;    // The bullet speed
+    public float speed;    // The bullet speed
     Vector2 dir;    // The bullet direction
     bool isReady;   // To check if bullet direction is set
 
     // Setting default values
     void Awake()
     {
-        speed = 5f;
         isReady = false;
     }
 

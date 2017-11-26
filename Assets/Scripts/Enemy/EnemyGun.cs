@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGun : MonoBehaviour {
+public class EnemyGun : MonoBehaviour
+{
 
     public GameObject EnemyBullet;
 
-	// Use this for initialization
-	void Start ()
+    public float speed;
+
+    // Use this for initialization
+    void Start()
     {
-        InvokeRepeating("FireEnemyBullet", 1.0f, 0.5f);	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        InvokeRepeating("FireEnemyBullet", 1.0f, 0.5f);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     // Function to fire enemy bullet
     void FireEnemyBullet()
@@ -32,10 +36,13 @@ public class EnemyGun : MonoBehaviour {
             bullet.transform.position = transform.position;
 
             // Compute bullet's direction towards player
-            Vector2 direction = playerShip.transform.position - bullet.transform.position;
+            Vector2 direction = new Vector3(bullet.transform.position.x, 0, 0) - bullet.transform.position;
 
             // set bullet's direction
             bullet.GetComponent<EnemyBullet>().SetDirection(direction);
+
+            // set bullet's speed
+            bullet.GetComponent<EnemyBullet>().speed = speed;
         }
     }
 }

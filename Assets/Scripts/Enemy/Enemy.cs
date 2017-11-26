@@ -35,6 +35,10 @@ public class Enemy : MonoBehaviour {
       Vector3 l = Vector3.left * offsetFactor * Mathf.Pow(2, level - 2);
       Vector3 r = Vector3.right * offsetFactor * Mathf.Pow(2, level - 2);
 
+      // set bullet speed of enemy
+      this.gameObject.GetComponentInChildren<EnemyGun>().speed = offsetFactor * 10f - level;
+      Debug.Log(level);
+
       leftChild = Instantiate(childPrefab, transform.position + d + l, Quaternion.identity).gameObject;
       rightChild = Instantiate(childPrefab, transform.position + d + r, Quaternion.identity).gameObject;
 
