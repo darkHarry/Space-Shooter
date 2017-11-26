@@ -11,21 +11,17 @@ public class Enemy : MonoBehaviour {
   public GameObject leftChild;
   public GameObject rightChild;
 
-  [SerializeField]
-  private float maximumHealth;
+  [SerializeField] private float maximumHealth;
   private float currentHealth;
-  [SerializeField]
-  private float damage;
+  [SerializeField] private float damage;
 
   public Vector3 requiredPosition;
 
-  // Use this for initialization
   void Start () {
     currentHealth = maximumHealth;
     requiredPosition = transform.position;
   }
 
-  // Update is called once per frame
   void Update () {
     if (transform.position != requiredPosition) {
       transform.position = Vector3.Slerp(transform.position, requiredPosition, moveRate);
