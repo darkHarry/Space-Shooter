@@ -56,9 +56,6 @@ public class Enemy : MonoBehaviour {
   }
 
   public void Die() {
-    Debug.Log("DIE STARTED!");
-    // TODO: Call `Destroy(gameObject)` with some explosions. Also, add some reward.
-
     if (!parent) {
       // MOTHERSHIP IS DESTROYED, ALL HOPE IS LOST
       Debug.Log("YOU WIN!");
@@ -78,9 +75,11 @@ public class Enemy : MonoBehaviour {
       if (leftChild && !rightChild) {
         // Single Child - Left
         RaiseChild(leftChild);
+        leftChild.GetComponent<Enemy>().Reposition();
       } else if (rightChild && !leftChild) {
         // Single Child - Right
         RaiseChild(rightChild);
+        rightChild.GetComponent<Enemy>().Reposition();
       } else {
         // Both children
         Enemy leftEnemy = leftChild.GetComponent<Enemy>();
@@ -93,6 +92,7 @@ public class Enemy : MonoBehaviour {
             rightEnemy.AddChildren(leftEnemy.rightChild);
           }
           leftEnemy.rightChild = rightChild;
+          leftEnemy.Reposition();
         } else {
           RaiseChild(rightChild);
           leftEnemy.parent = rightChild;
@@ -100,10 +100,10 @@ public class Enemy : MonoBehaviour {
             leftEnemy.AddChildren(rightEnemy.leftChild);
           }
           rightEnemy.leftChild = leftChild;
+          rightEnemy.Reposition();
         }
       }
     }
-    Reposition();
 
     Destroy(gameObject);
   }
@@ -113,11 +113,9 @@ public class Enemy : MonoBehaviour {
     if (!leftChild) {
       leftChild = child;
       childEnemy.parent = gameObject;
-      childEnemy.Reposition();
     } else if (!rightChild) {
       rightChild = child;
       childEnemy.parent = gameObject;
-      childEnemy.Reposition();
     } else {
       Enemy leftEnemy = leftChild.GetComponent<Enemy>();
       Enemy rightEnemy = rightChild.GetComponent<Enemy>();
@@ -164,16 +162,19 @@ public class Enemy : MonoBehaviour {
     }
   }
 
-  private void Reposition() {
-    Enemy parentEnemy = parent.GetComponent<Enemy>();
-    Vector3 reqPos = parentEnemy.requiredPosition + (Vector3.down * offsetFactor);
+  public void Reposition() {
+    if (parent) {
+      Enemy parentEnemy = parent.GetComponent<Enemy>();
+      Vector3 rp = parentEnemy.requiredPosition + Vector3.down * offsetFactor;
 
-    if (parentEnemy.leftChild == gameObject) {
-      reqPos += (Vector3.left * offsetFactor * Mathf.Pow(2, Height() - 2));
-    } else {
-      reqPos += (Vector3.right * offsetFactor * Mathf.Pow(2, Height() - 2));
+      if (parentEnemy.leftChild == gameObject) {
+        rp += Vector3.left * offsetFactor * Mathf.Pow(2, Height() - 2);
+      } else if (parentEnemy.rightChild == gameObject) {
+        rp += Vector3.right * offsetFactor * Mathf.Pow(2, Height() - 1);
+      }
+
+      requiredPosition = rp;
     }
-    requiredPosition = reqPos;
 
     if (leftChild) {
       leftChild.GetComponent<Enemy>().Reposition();
