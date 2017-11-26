@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
 
+  private GameObject motherShip;
+
   [SerializeField]
   private Transform motherShipPrefab;
   [SerializeField]
@@ -14,14 +16,13 @@ public class Spawner : MonoBehaviour {
 
   // Use this for initialization
   void Start () {
-    GameObject motherShip = Instantiate(motherShipPrefab, motherShipPosition, Quaternion.identity).gameObject;
+    motherShip = Instantiate(motherShipPrefab, motherShipPosition, Quaternion.identity).gameObject;
     Enemy motherEnemy = motherShip.GetComponent<Enemy>();
     motherEnemy.AddLevel(levels - 1, enemyShipPrefab);
   }
 
   // Update is called once per frame
   void Update () {
-
   }
 
 }

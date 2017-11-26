@@ -285,7 +285,7 @@ MonoBehaviour:
   enemyShipPrefab: {fileID: 4602372022942492, guid: c808098c069b0b14fa30b1a727225b50,
     type: 2}
   levels: 4
-  motherShipPosition: {x: 0, y: 2.5, z: 0}
+  motherShipPosition: {x: 0, y: 4, z: 0}
 --- !u!4 &1580538644
 Transform:
   m_ObjectHideFlags: 0
@@ -383,7 +383,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1741011996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1339836960}

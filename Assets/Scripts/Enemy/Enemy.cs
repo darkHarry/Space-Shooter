@@ -143,7 +143,9 @@ public class Enemy : MonoBehaviour {
   }
 
   private void OnCollisionEnter2D(Collision2D other) {
+        Debug.Log("VEE");
     if (other.gameObject.tag == "Bullet") {
+            Debug.Log("Hello");
       float dmg = other.gameObject.GetComponent<PlayerBullet>().damage;
       // Destroy the bullet
       // TODO: Make a mini-explosion?
