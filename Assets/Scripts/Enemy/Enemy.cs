@@ -55,12 +55,15 @@ public class Enemy : MonoBehaviour {
   }
 
   private void Die() {
-    Enemy parentEnemy = parent.GetComponent<Enemy>();
-    if (parentEnemy.leftChild == gameObject) {
-      parentEnemy.leftChild = null;
-    } else {
-      parentEnemy.rightChild = null;
+    if (parent) {
+      Enemy parentEnemy = parent.GetComponent<Enemy>();
+      if (parentEnemy.leftChild == gameObject) {
+        parentEnemy.leftChild = null;
+      } else {
+        parentEnemy.rightChild = null;
+      }
     }
+
     // TODO: Balance Tree
 
     // TODO: Call `Destroy(gameObject)` with some explosions. Also, add some reward.
