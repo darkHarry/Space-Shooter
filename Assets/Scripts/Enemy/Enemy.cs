@@ -19,9 +19,6 @@ public class Enemy : MonoBehaviour {
 
   // Use this for initialization
   void Start () {
-    leftChild = null;
-    rightChild = null;
-
     currentHealth = maximumHealth;
   }
 
