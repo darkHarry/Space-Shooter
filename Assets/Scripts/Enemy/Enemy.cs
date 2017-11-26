@@ -23,6 +23,9 @@ public class Enemy : MonoBehaviour {
   }
 
   void Update () {
+    if (transform.rotation != Quaternion.identity) {
+      transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 0.1f);
+    }
     if (transform.position != requiredPosition) {
       transform.position = Vector3.Slerp(transform.position, requiredPosition, moveRate);
     }
@@ -59,9 +62,11 @@ public class Enemy : MonoBehaviour {
     if (!parent) {
       // MOTHERSHIP IS DESTROYED, ALL HOPE IS LOST
       Debug.Log("YOU WIN!");
+      Application.Quit();
     }
 
-    if (parent && !leftChild && !rightChild) {
+    // LEAF NODE, EZ PZ
+    if (!leftChild && !rightChild) {
       Enemy parentEnemy = parent.GetComponent<Enemy>();
       if (parentEnemy.leftChild == gameObject) {
         parentEnemy.leftChild = null;
@@ -87,19 +92,11 @@ public class Enemy : MonoBehaviour {
 
         if (leftEnemy.Height() > rightEnemy.Height()) {
           RaiseChild(leftChild);
-          rightEnemy.parent = leftChild;
-          if (leftEnemy.rightChild) {
-            rightEnemy.AddChildren(leftEnemy.rightChild);
-          }
-          leftEnemy.rightChild = rightChild;
+          leftEnemy.AddChildren(rightChild);
           leftEnemy.Reposition();
         } else {
           RaiseChild(rightChild);
-          leftEnemy.parent = rightChild;
-          if (rightEnemy.leftChild) {
-            leftEnemy.AddChildren(rightEnemy.leftChild);
-          }
-          rightEnemy.leftChild = leftChild;
+          rightEnemy.AddChildren(leftChild);
           rightEnemy.Reposition();
         }
       }
@@ -109,6 +106,10 @@ public class Enemy : MonoBehaviour {
   }
 
   public void AddChildren(GameObject child) {
+    if (gameObject == child) {
+      Application.Quit();
+    }
+
     Enemy childEnemy = child.GetComponent<Enemy>();
     if (!leftChild) {
       leftChild = child;
@@ -134,8 +135,10 @@ public class Enemy : MonoBehaviour {
     childEnemy.parent = parent;
     if (parentEnemy.leftChild == gameObject) {
       parentEnemy.leftChild = child;
-    } else {
+    } else if (parentEnemy.rightChild == gameObject) {
       parentEnemy.rightChild = child;
+    } else {
+      Application.Quit();
     }
   }
 
@@ -178,10 +181,12 @@ public class Enemy : MonoBehaviour {
       }
     }
 
-    if (leftChild) {
+    // UGLY HACK --- SORRY
+    if (leftChild && leftChild != gameObject) {
       leftChild.GetComponent<Enemy>().Reposition();
     }
-    if (rightChild) {
+    // UGLY HACK --- SORRY
+    if (rightChild && rightChild != gameObject) {
       rightChild.GetComponent<Enemy>().Reposition();
     }
   }
