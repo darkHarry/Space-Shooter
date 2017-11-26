@@ -56,8 +56,8 @@ public class Enemy : MonoBehaviour {
   }
 
   public void Die() {
+    Debug.Log("DIE STARTED!");
     // TODO: Call `Destroy(gameObject)` with some explosions. Also, add some reward.
-    Destroy(gameObject);
 
     if (!parent) {
       // MOTHERSHIP IS DESTROYED, ALL HOPE IS LOST
@@ -103,6 +103,9 @@ public class Enemy : MonoBehaviour {
         }
       }
     }
+    Reposition();
+
+    Destroy(gameObject);
   }
 
   public void AddChildren(GameObject child) {
@@ -136,7 +139,6 @@ public class Enemy : MonoBehaviour {
     } else {
       parentEnemy.rightChild = child;
     }
-    childEnemy.Reposition();
   }
 
   private void OnCollisionEnter2D(Collision2D other) {
@@ -154,26 +156,22 @@ public class Enemy : MonoBehaviour {
     if (!leftChild && !rightChild) {
       return 1;
     } else if (!leftChild) {
-      Enemy rightEnemy = rightChild.GetComponent<Enemy>();
-      return rightEnemy.Height() + 1;
+      return rightChild.GetComponent<Enemy>().Height() + 1;
     } else if (!rightChild) {
-      Enemy leftEnemy = leftChild.GetComponent<Enemy>();
-      return leftEnemy.Height() + 1;
+      return leftChild.GetComponent<Enemy>().Height() + 1;
     } else {
-      Enemy rightEnemy = rightChild.GetComponent<Enemy>();
-      Enemy leftEnemy = leftChild.GetComponent<Enemy>();
-      return Mathf.Max(rightEnemy.Height(), leftEnemy.Height()) + 1;
+      return Mathf.Max(rightChild.GetComponent<Enemy>().Height(), leftChild.GetComponent<Enemy>().Height()) + 1;
     }
   }
 
   private void Reposition() {
     Enemy parentEnemy = parent.GetComponent<Enemy>();
-    Vector3 reqPos = parentEnemy.requiredPosition + Vector3.down * offsetFactor;
+    Vector3 reqPos = parentEnemy.requiredPosition + (Vector3.down * offsetFactor);
 
     if (parentEnemy.leftChild == gameObject) {
-      reqPos += Vector3.left * offsetFactor * Mathf.Pow(2, Height() - 2);
+      reqPos += (Vector3.left * offsetFactor * Mathf.Pow(2, Height() - 2));
     } else {
-      reqPos += Vector3.right * offsetFactor * Mathf.Pow(2, Height() - 2);
+      reqPos += (Vector3.right * offsetFactor * Mathf.Pow(2, Height() - 2));
     }
     requiredPosition = reqPos;
 
