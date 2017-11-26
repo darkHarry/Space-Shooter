@@ -64,6 +64,8 @@ public class Enemy : MonoBehaviour {
       }
     }
 
+    // TODO: Work on placement
+
     // TODO: Balance Tree
     if (parent) {
       Enemy parentEnemy = parent.GetComponent<Enemy>();
@@ -118,7 +120,12 @@ public class Enemy : MonoBehaviour {
       Enemy rightEnemy = rightChild.GetComponent<Enemy>();
       balanceFactor -= rightEnemy.Height();
     }
-    Debug.Log(balanceFactor);
+
+    if (balanceFactor > 2) {
+      Debug.Log("RIGHT ROTATE");
+    } else if (balanceFactor < -2) {
+      Debug.Log("LEFT ROTATE");
+    }
 
     if (parent) {
       Enemy parentEnemy = parent.GetComponent<Enemy>();
