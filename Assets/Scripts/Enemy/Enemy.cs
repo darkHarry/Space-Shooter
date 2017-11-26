@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour {
 
   [SerializeField]
   private float offsetFactor = 1f;
+  [SerializeField]
+  private float moveRate = 0.05f;
 
   public GameObject parent;
   public GameObject leftChild;
@@ -17,22 +19,27 @@ public class Enemy : MonoBehaviour {
   [SerializeField]
   private float damage;
 
+  public Vector3 requiredPosition;
+
   // Use this for initialization
   void Start () {
     currentHealth = maximumHealth;
+    requiredPosition = transform.position;
   }
 
   // Update is called once per frame
   void Update () {
-
+    if (transform.position != requiredPosition) {
+      transform.position = Vector3.Slerp(transform.position, requiredPosition, moveRate);
+    }
   }
 
   public void AddLevel(int level, Transform childPrefab) {
     if (level > 0) {
       // TODO: Use different values for childPrefab here
       Vector3 d = Vector3.down * offsetFactor;
-      Vector3 l = Vector3.left * offsetFactor;
-      Vector3 r = Vector3.right * offsetFactor;
+      Vector3 l = Vector3.left * offsetFactor * Mathf.Pow(2, level - 2);
+      Vector3 r = Vector3.right * offsetFactor * Mathf.Pow(2, level - 2);
 
       leftChild = Instantiate(childPrefab, transform.position + d + l, Quaternion.identity).gameObject;
       rightChild = Instantiate(childPrefab, transform.position + d + r, Quaternion.identity).gameObject;
@@ -54,8 +61,16 @@ public class Enemy : MonoBehaviour {
     }
   }
 
-  private void Die() {
-    if (parent) {
+  public void Die() {
+    // TODO: Call `Destroy(gameObject)` with some explosions. Also, add some reward.
+    Destroy(gameObject);
+
+    if (!parent) {
+      // MOTHERSHIP IS DESTROYED, ALL HOPE IS LOST
+      Debug.Log("YOU WIN!");
+    }
+
+    if (parent && !leftChild && !rightChild) {
       Enemy parentEnemy = parent.GetComponent<Enemy>();
       if (parentEnemy.leftChild == gameObject) {
         parentEnemy.leftChild = null;
@@ -65,23 +80,85 @@ public class Enemy : MonoBehaviour {
     }
 
     // TODO: Work on placement
+    if (leftChild || rightChild) {
+      if (leftChild && !rightChild) {
+        // Single Child - Left
+        RaiseChild(leftChild);
+      } else if (rightChild && !leftChild) {
+        // Single Child - Right
+        RaiseChild(rightChild);
+      } else {
+        // Both children
+        Enemy leftEnemy = leftChild.GetComponent<Enemy>();
+        Enemy rightEnemy = rightChild.GetComponent<Enemy>();
+
+        if (leftEnemy.Height() > rightEnemy.Height()) {
+          RaiseChild(leftChild);
+          rightEnemy.parent = leftChild;
+          if (leftEnemy.rightChild) {
+            rightEnemy.AddChildren(leftEnemy.rightChild);
+          }
+          leftEnemy.rightChild = rightChild;
+        } else {
+          RaiseChild(rightChild);
+          leftEnemy.parent = rightChild;
+          if (rightEnemy.leftChild) {
+            leftEnemy.AddChildren(rightEnemy.leftChild);
+          }
+          rightEnemy.leftChild = leftChild;
+        }
+      }
+    }
+
+
 
     // TODO: Balance Tree
-    if (parent) {
-      Enemy parentEnemy = parent.GetComponent<Enemy>();
-      parentEnemy.Balance();
-    }
-
-    // TODO: Call `Destroy(gameObject)` with some explosions. Also, add some reward.
-    Destroy(gameObject);
+    // if (parent) {
+    //   Enemy parentEnemy = parent.GetComponent<Enemy>();
+    //   parentEnemy.Balance();
+    // }
   }
 
-  public void Heal(int value) {
-    currentHealth += value;
-    if (currentHealth > maximumHealth) {
-      currentHealth = maximumHealth;
+  public void AddChildren(GameObject child) {
+    Enemy childEnemy = child.GetComponent<Enemy>();
+    if (!leftChild) {
+      leftChild = child;
+      childEnemy.parent = gameObject;
+      childEnemy.Reposition();
+    } else if (!rightChild) {
+      rightChild = child;
+      childEnemy.parent = gameObject;
+      childEnemy.Reposition();
+    } else {
+      Enemy leftEnemy = leftChild.GetComponent<Enemy>();
+      Enemy rightEnemy = rightChild.GetComponent<Enemy>();
+
+      if (leftEnemy.Height() > rightEnemy.Height()) {
+        rightEnemy.AddChildren(child);
+      } else {
+        leftEnemy.AddChildren(child);
+      }
     }
   }
+
+  private void RaiseChild(GameObject child) {
+    Enemy childEnemy = child.GetComponent<Enemy>();
+    Enemy parentEnemy = parent.GetComponent<Enemy>();
+    childEnemy.parent = parent;
+    if (parentEnemy.leftChild == gameObject) {
+      parentEnemy.leftChild = child;
+    } else {
+      parentEnemy.rightChild = child;
+    }
+    childEnemy.Reposition();
+  }
+
+  // public void Heal(int value) {
+  //   currentHealth += value;
+  //   if (currentHealth > maximumHealth) {
+  //     currentHealth = maximumHealth;
+  //   }
+  // }
 
   private void OnCollisionEnter2D(Collision2D other) {
     if (other.gameObject.tag == "Bullet") {
@@ -110,26 +187,45 @@ public class Enemy : MonoBehaviour {
     }
   }
 
-  public void Balance() {
-    int balanceFactor = 0;
+  // public void Balance() {
+  //   int balanceFactor = 0;
+  //   if (leftChild) {
+  //     Enemy leftEnemy = leftChild.GetComponent<Enemy>();
+  //     balanceFactor += leftEnemy.Height();
+  //   }
+  //   if (rightChild) {
+  //     Enemy rightEnemy = rightChild.GetComponent<Enemy>();
+  //     balanceFactor -= rightEnemy.Height();
+  //   }
+
+  //   if (balanceFactor > 2) {
+  //     Debug.Log("RIGHT ROTATE");
+  //   } else if (balanceFactor < -2) {
+  //     Debug.Log("LEFT ROTATE");
+  //   }
+
+  //   if (parent) {
+  //     Enemy parentEnemy = parent.GetComponent<Enemy>();
+  //     parentEnemy.Balance();
+  //   }
+  // }
+
+  private void Reposition() {
+    Enemy parentEnemy = parent.GetComponent<Enemy>();
+    Vector3 reqPos = parentEnemy.requiredPosition + Vector3.down * offsetFactor;
+
+    if (parentEnemy.leftChild == gameObject) {
+      reqPos += Vector3.left * offsetFactor * Mathf.Pow(2, Height() - 2);
+    } else {
+      reqPos += Vector3.right * offsetFactor * Mathf.Pow(2, Height() - 2);
+    }
+    requiredPosition = reqPos;
+
     if (leftChild) {
-      Enemy leftEnemy = leftChild.GetComponent<Enemy>();
-      balanceFactor += leftEnemy.Height();
+      leftChild.GetComponent<Enemy>().Reposition();
     }
     if (rightChild) {
-      Enemy rightEnemy = rightChild.GetComponent<Enemy>();
-      balanceFactor -= rightEnemy.Height();
-    }
-
-    if (balanceFactor > 2) {
-      Debug.Log("RIGHT ROTATE");
-    } else if (balanceFactor < -2) {
-      Debug.Log("LEFT ROTATE");
-    }
-
-    if (parent) {
-      Enemy parentEnemy = parent.GetComponent<Enemy>();
-      parentEnemy.Balance();
+      rightChild.GetComponent<Enemy>().Reposition();
     }
   }
 }
