@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-  [SerializeField]
-  private float offsetFactor = 1f;
-  [SerializeField]
-  private float moveRate = 0.05f;
+  [SerializeField] private float offsetFactor = 1f;
+  [SerializeField] private float moveRate = 0.05f;
 
   public GameObject parent;
   public GameObject leftChild;
@@ -109,14 +107,6 @@ public class Enemy : MonoBehaviour {
         }
       }
     }
-
-
-
-    // TODO: Balance Tree
-    // if (parent) {
-    //   Enemy parentEnemy = parent.GetComponent<Enemy>();
-    //   parentEnemy.Balance();
-    // }
   }
 
   public void AddChildren(GameObject child) {
@@ -153,13 +143,6 @@ public class Enemy : MonoBehaviour {
     childEnemy.Reposition();
   }
 
-  // public void Heal(int value) {
-  //   currentHealth += value;
-  //   if (currentHealth > maximumHealth) {
-  //     currentHealth = maximumHealth;
-  //   }
-  // }
-
   private void OnCollisionEnter2D(Collision2D other) {
     if (other.gameObject.tag == "Bullet") {
       float dmg = other.gameObject.GetComponent<PlayerBullet>().damage;
@@ -186,29 +169,6 @@ public class Enemy : MonoBehaviour {
       return Mathf.Max(rightEnemy.Height(), leftEnemy.Height()) + 1;
     }
   }
-
-  // public void Balance() {
-  //   int balanceFactor = 0;
-  //   if (leftChild) {
-  //     Enemy leftEnemy = leftChild.GetComponent<Enemy>();
-  //     balanceFactor += leftEnemy.Height();
-  //   }
-  //   if (rightChild) {
-  //     Enemy rightEnemy = rightChild.GetComponent<Enemy>();
-  //     balanceFactor -= rightEnemy.Height();
-  //   }
-
-  //   if (balanceFactor > 2) {
-  //     Debug.Log("RIGHT ROTATE");
-  //   } else if (balanceFactor < -2) {
-  //     Debug.Log("LEFT ROTATE");
-  //   }
-
-  //   if (parent) {
-  //     Enemy parentEnemy = parent.GetComponent<Enemy>();
-  //     parentEnemy.Balance();
-  //   }
-  // }
 
   private void Reposition() {
     Enemy parentEnemy = parent.GetComponent<Enemy>();
