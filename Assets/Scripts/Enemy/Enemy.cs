@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour {
   }
 
   void Update () {
+    requiredPosition += Vector3.down * 0.05f * Time.deltaTime;
     if (transform.rotation != Quaternion.identity) {
       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 0.1f);
     }
@@ -62,7 +63,8 @@ public class Enemy : MonoBehaviour {
     if (!parent) {
       // MOTHERSHIP IS DESTROYED, ALL HOPE IS LOST
       Debug.Log("YOU WIN!");
-      Application.Quit();
+      UnityEditor.EditorApplication.isPlaying = false;
+      return;
     }
 
     // LEAF NODE, EZ PZ
@@ -107,16 +109,18 @@ public class Enemy : MonoBehaviour {
 
   public void AddChildren(GameObject child) {
     if (gameObject == child) {
-      Application.Quit();
+      UnityEditor.EditorApplication.isPlaying = false;
     }
 
     Enemy childEnemy = child.GetComponent<Enemy>();
     if (!leftChild) {
       leftChild = child;
       childEnemy.parent = gameObject;
+      return;
     } else if (!rightChild) {
       rightChild = child;
       childEnemy.parent = gameObject;
+      return;
     } else {
       Enemy leftEnemy = leftChild.GetComponent<Enemy>();
       Enemy rightEnemy = rightChild.GetComponent<Enemy>();
@@ -126,6 +130,7 @@ public class Enemy : MonoBehaviour {
       } else {
         leftEnemy.AddChildren(child);
       }
+      return;
     }
   }
 
@@ -138,7 +143,7 @@ public class Enemy : MonoBehaviour {
     } else if (parentEnemy.rightChild == gameObject) {
       parentEnemy.rightChild = child;
     } else {
-      Application.Quit();
+      UnityEditor.EditorApplication.isPlaying = false;
     }
   }
 
