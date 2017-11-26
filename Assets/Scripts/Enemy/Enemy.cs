@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour {
     }
   }
 
-  void OnCollisionEnter2D(Collision2D other) {
+  private void OnCollisionEnter2D(Collision2D other) {
     if (other.gameObject.tag == "Bullet") {
       float dmg = other.gameObject.GetComponent<PlayerBullet>().damage;
       // Destroy the bullet
@@ -82,6 +82,23 @@ public class Enemy : MonoBehaviour {
       Destroy(other.gameObject);
       // TODO: Take damage etc.
       TakeDamage(dmg);
+      Debug.Log(Height());
+    }
+  }
+
+  public int Height() {
+    if (!leftChild && !rightChild) {
+      return 1;
+    } else if (!leftChild) {
+      Enemy rightEnemy = rightChild.GetComponent<Enemy>();
+      return rightEnemy.Height() + 1;
+    } else if (!rightChild) {
+      Enemy leftEnemy = leftChild.GetComponent<Enemy>();
+      return leftEnemy.Height() + 1;
+    } else {
+      Enemy rightEnemy = rightChild.GetComponent<Enemy>();
+      Enemy leftEnemy = leftChild.GetComponent<Enemy>();
+      return Mathf.Max(rightEnemy.Height(), leftEnemy.Height()) + 1;
     }
   }
 }
