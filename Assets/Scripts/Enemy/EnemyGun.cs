@@ -12,9 +12,9 @@ public class EnemyGun : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        speed = 10f - 2*gameObject.GetComponentInParent<Enemy>().Level();
+        speed = 2f;
 
-        InvokeRepeating("FireEnemyBullet", speed*0.5f, 0.5f);
+        InvokeRepeating("FireEnemyBullet", 0.5f, (5f - gameObject.GetComponentInParent<Enemy>().Level()) / 2);
     }
 
     // Update is called once per frame

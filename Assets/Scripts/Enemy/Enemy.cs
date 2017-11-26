@@ -18,12 +18,13 @@ public class Enemy : MonoBehaviour {
   public Vector3 requiredPosition;
 
   void Start () {
+    maximumHealth = 20 * Level();
     currentHealth = maximumHealth;
     requiredPosition = transform.position;
   }
 
   void Update () {
-    requiredPosition += Vector3.down * 0.05f * Time.deltaTime;
+    requiredPosition += Vector3.down * 0.2f * Time.deltaTime;
     if (transform.rotation != Quaternion.identity) {
       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 0.1f);
     }
@@ -60,7 +61,7 @@ public class Enemy : MonoBehaviour {
   }
 
   public void Die() {
-    if (!parent) {
+    if (!parent && Level() == 4) {
       // MOTHERSHIP IS DESTROYED, ALL HOPE IS LOST
       Debug.Log("YOU WIN!");
       UnityEditor.EditorApplication.isPlaying = false;
@@ -109,6 +110,7 @@ public class Enemy : MonoBehaviour {
 
   public void AddChildren(GameObject child) {
     if (gameObject == child) {
+      Debug.Log("YE WALA BUG");
       UnityEditor.EditorApplication.isPlaying = false;
     }
 
@@ -143,14 +145,13 @@ public class Enemy : MonoBehaviour {
     } else if (parentEnemy.rightChild == gameObject) {
       parentEnemy.rightChild = child;
     } else {
+      Debug.Log("WO WALA BUG");
       UnityEditor.EditorApplication.isPlaying = false;
     }
   }
 
   private void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log("VEE");
     if (other.gameObject.tag == "Bullet") {
-            Debug.Log("Hello");
       float dmg = other.gameObject.GetComponent<PlayerBullet>().damage;
       // Destroy the bullet
       // TODO: Make a mini-explosion?
