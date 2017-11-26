@@ -118,11 +118,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offsetFactor: 1
+  moveRate: 0.05
   parent: {fileID: 0}
   leftChild: {fileID: 0}
   rightChild: {fileID: 0}
   maximumHealth: 100
   damage: 0
+  requiredPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &212821065130191592
 SpriteRenderer:
   m_ObjectHideFlags: 1

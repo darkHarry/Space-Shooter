@@ -164,16 +164,18 @@ public class Enemy : MonoBehaviour {
 
   public void Reposition() {
     if (parent) {
+      Vector3 d = Vector3.down * offsetFactor;
+      Vector3 l = Vector3.left * offsetFactor * Mathf.Pow(2, Level() - 2);
+      Vector3 r = Vector3.right * offsetFactor * Mathf.Pow(2, Level() - 2);
+
       Enemy parentEnemy = parent.GetComponent<Enemy>();
-      Vector3 rp = parentEnemy.requiredPosition + Vector3.down * offsetFactor;
+      Vector3 pp = parentEnemy.requiredPosition;
 
       if (parentEnemy.leftChild == gameObject) {
-        rp += Vector3.left * offsetFactor * Mathf.Pow(2, Height() - 2);
+        requiredPosition = pp + d + l;
       } else if (parentEnemy.rightChild == gameObject) {
-        rp += Vector3.right * offsetFactor * Mathf.Pow(2, Height() - 1);
+        requiredPosition = pp + d + r;
       }
-
-      requiredPosition = rp;
     }
 
     if (leftChild) {
@@ -181,6 +183,14 @@ public class Enemy : MonoBehaviour {
     }
     if (rightChild) {
       rightChild.GetComponent<Enemy>().Reposition();
+    }
+  }
+
+  public int Level() {
+    if (!parent) {
+      return GameObject.Find("Spawner").GetComponent<Spawner>().levels;
+    } else {
+      return parent.GetComponent<Enemy>().Level() - 1;
     }
   }
 }

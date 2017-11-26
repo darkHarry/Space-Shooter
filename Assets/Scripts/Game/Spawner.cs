@@ -8,8 +8,7 @@ public class Spawner : MonoBehaviour {
   private Transform motherShipPrefab;
   [SerializeField]
   private Transform enemyShipPrefab;
-  [SerializeField]
-  private int levels;
+  public int levels;
   [SerializeField]
   private Vector3 motherShipPosition;
 
