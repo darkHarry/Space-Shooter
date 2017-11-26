@@ -65,6 +65,10 @@ public class Enemy : MonoBehaviour {
     }
 
     // TODO: Balance Tree
+    if (parent) {
+      Enemy parentEnemy = parent.GetComponent<Enemy>();
+      parentEnemy.Balance();
+    }
 
     // TODO: Call `Destroy(gameObject)` with some explosions. Also, add some reward.
     Destroy(gameObject);
@@ -85,7 +89,6 @@ public class Enemy : MonoBehaviour {
       Destroy(other.gameObject);
       // TODO: Take damage etc.
       TakeDamage(dmg);
-      Debug.Log(Height());
     }
   }
 
@@ -102,6 +105,24 @@ public class Enemy : MonoBehaviour {
       Enemy rightEnemy = rightChild.GetComponent<Enemy>();
       Enemy leftEnemy = leftChild.GetComponent<Enemy>();
       return Mathf.Max(rightEnemy.Height(), leftEnemy.Height()) + 1;
+    }
+  }
+
+  public void Balance() {
+    int balanceFactor = 0;
+    if (leftChild) {
+      Enemy leftEnemy = leftChild.GetComponent<Enemy>();
+      balanceFactor += leftEnemy.Height();
+    }
+    if (rightChild) {
+      Enemy rightEnemy = rightChild.GetComponent<Enemy>();
+      balanceFactor -= rightEnemy.Height();
+    }
+    Debug.Log(balanceFactor);
+
+    if (parent) {
+      Enemy parentEnemy = parent.GetComponent<Enemy>();
+      parentEnemy.Balance();
     }
   }
 }
