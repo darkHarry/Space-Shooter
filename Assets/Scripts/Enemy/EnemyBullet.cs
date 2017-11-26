@@ -56,4 +56,14 @@ public class EnemyBullet : MonoBehaviour {
             }
         }
 	}
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Bullet")
+        {
+            // Destroy the bullet
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+    }
 }

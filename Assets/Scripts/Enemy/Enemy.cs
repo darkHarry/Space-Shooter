@@ -25,6 +25,14 @@ public class Enemy : MonoBehaviour {
 
   void Update () {
     requiredPosition += Vector3.down * 0.2f * Time.deltaTime;
+
+    // Top screen Vector
+    Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+    if (transform.position.y < min.y) {
+        Debug.Log("YOU LOSE!");
+        //UnityEditor.EditorApplication.isPlaying = false;
+    }
+
     if (transform.rotation != Quaternion.identity) {
       transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.identity, 0.1f);
     }
