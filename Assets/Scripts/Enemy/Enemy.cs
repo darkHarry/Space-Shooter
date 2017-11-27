@@ -31,8 +31,8 @@ public class Enemy : MonoBehaviour {
     // Top screen Vector
     Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
     if (transform.position.y < min.y) {
-        //Debug.Log("YOU LOSE!");
-        //UnityEditor.EditorApplication.isPlaying = false;
+      Debug.Log("YOU LOSE!");
+      UnityEditor.EditorApplication.isPlaying = false;
     }
 
     if (transform.rotation != Quaternion.identity) {
@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour {
   public void AddChildren(GameObject child) {
     if (gameObject == child) {
       Debug.Log("YE WALA BUG");
-      UnityEditor.EditorApplication.isPlaying = false;
+      UnityEditor.EditorApplication.isPaused = true;
     }
 
     Enemy childEnemy = child.GetComponent<Enemy>();
@@ -155,8 +155,9 @@ public class Enemy : MonoBehaviour {
     } else if (parentEnemy.rightChild == gameObject) {
       parentEnemy.rightChild = child;
     } else {
+      // |
       Debug.Log("WO WALA BUG");
-      UnityEditor.EditorApplication.isPlaying = false;
+      UnityEditor.EditorApplication.isPaused = true;
     }
   }
 
