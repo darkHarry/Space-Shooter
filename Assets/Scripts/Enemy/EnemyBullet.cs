@@ -8,6 +8,8 @@ public class EnemyBullet : MonoBehaviour {
     Vector2 dir;    // The bullet direction
     bool isReady;   // To check if bullet direction is set
 
+    public float damage;
+
     // Setting default values
     void Awake()
     {

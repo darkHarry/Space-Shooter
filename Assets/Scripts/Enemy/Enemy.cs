@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour {
 
   [SerializeField] private float maximumHealth;
   private float currentHealth;
-  [SerializeField] private float damage;
+  public float damage;
 
   public Vector3 requiredPosition;
 
@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour {
     maximumHealth = 20 * Level();
     currentHealth = maximumHealth;
     requiredPosition = transform.position;
+
+    gameObject.GetComponent<EnemyBullet>().damage = damage;
   }
 
   void Update () {
@@ -29,7 +31,7 @@ public class Enemy : MonoBehaviour {
     // Top screen Vector
     Vector2 min = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
     if (transform.position.y < min.y) {
-        Debug.Log("YOU LOSE!");
+        //Debug.Log("YOU LOSE!");
         //UnityEditor.EditorApplication.isPlaying = false;
     }
 

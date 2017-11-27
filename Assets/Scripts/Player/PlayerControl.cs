@@ -8,13 +8,16 @@ public class PlayerControl : MonoBehaviour {
     public GameObject bulletPosition01;
     public GameObject bulletPosition02;
 
+    [SerializeField] private float maximumHealth;
+    private float currentHealth;
+
     // player speed
     public float speed;
 
     // Use this for initialization
     void Start ()
     {
-
+      currentHealth = maximumHealth;
     }
 
     // Update is called once per frame
@@ -69,5 +72,34 @@ public class PlayerControl : MonoBehaviour {
 
         // Update player's position
         transform.position = pos;
+    }
+
+    public void TakeDamage(float value) {
+      currentHealth -= value;
+      if (currentHealth <= 0) {
+        Die();
+      }
+    }
+
+    public void Die() {
+      //Debug.Log("YOU LOSE!");
+      Destroy(gameObject);
+      UnityEditor.EditorApplication.isPlaying = false;
+      return;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+      if (other.gameObject.tag == "EnemyBullet") {
+        float dmg = other.gameObject.GetComponent<EnemyBullet>().damage;
+        Debug.Log(dmg);
+        Destroy(other.gameObject);
+        TakeDamage(dmg);
+      }
+
+      if (other.gameObject.tag == "EnemyShip") {
+        Destroy(other.gameObject);
+        Destroy(gameObject);
+        Die();
+      }
     }
 }

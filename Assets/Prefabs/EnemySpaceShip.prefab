@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 50394445884872544}
   m_Layer: 0
   m_Name: EnemySpaceShip
-  m_TagString: Untagged
+  m_TagString: EnemyShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   leftChild: {fileID: 0}
   rightChild: {fileID: 0}
   maximumHealth: 100
-  damage: 0
+  damage: 5
   requiredPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &212821065130191592
 SpriteRenderer:
