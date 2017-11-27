@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-      currentHealth = maximumHealth;
+        currentHealth = maximumHealth;
     }
 
     // Update is called once per frame
@@ -75,30 +75,29 @@ public class PlayerControl : MonoBehaviour {
     }
 
     public void TakeDamage(float value) {
-      currentHealth -= value;
-      if (currentHealth <= 0) {
-        Die();
-      }
+        currentHealth -= value;
+        if (currentHealth <= 0) {
+            Die();
+        }
     }
 
     public void Die() {
-      Debug.Log("YOU LOSE!");
-      Destroy(gameObject);
-      UnityEditor.EditorApplication.isPlaying = false;
-      return;
+        Debug.Log("YOU LOSE!");
+        Destroy(gameObject);
+        UnityEditor.EditorApplication.isPlaying = false;
+        return;
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-      if (other.gameObject.tag == "EnemyBullet") {
-        float dmg = other.gameObject.GetComponent<EnemyBullet>().damage;
-        Debug.Log(dmg);
-        Destroy(other.gameObject);
-        TakeDamage(dmg);
-      }
+        if (other.gameObject.tag == "EnemyBullet") {
+            float dmg = other.gameObject.GetComponent<EnemyBullet>().damage;
+            Destroy(other.gameObject);
+            TakeDamage(dmg);
+        }
 
-      if (other.gameObject.tag == "EnemyShip") {
-        Destroy(other.gameObject);
-        Die();
-      }
+        if (other.gameObject.tag == "EnemyShip") {
+            Destroy(other.gameObject);
+            Die();
+        }
     }
 }
