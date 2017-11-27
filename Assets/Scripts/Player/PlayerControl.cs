@@ -11,7 +11,6 @@ public class PlayerControl : MonoBehaviour {
     [SerializeField] private float maximumHealth;
     private float currentHealth;
 
-    // player speed
     public float speed;
 
     // Use this for initialization
@@ -99,5 +98,10 @@ public class PlayerControl : MonoBehaviour {
             Destroy(other.gameObject);
             Die();
         }
+    }
+
+    void OnGUI() {
+        float hbLength = Screen.width * (currentHealth / maximumHealth) - 20;
+        GUI.Box(new Rect(10, 10, hbLength, 20), currentHealth + "/" + maximumHealth);
     }
 }
