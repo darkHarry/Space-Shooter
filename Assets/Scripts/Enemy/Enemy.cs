@@ -21,8 +21,6 @@ public class Enemy : MonoBehaviour {
     maximumHealth = 20 * Level();
     currentHealth = maximumHealth;
     requiredPosition = transform.position;
-
-    gameObject.GetComponent<EnemyBullet>().damage = damage;
   }
 
   void Update () {

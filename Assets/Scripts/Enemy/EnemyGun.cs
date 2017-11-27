@@ -6,12 +6,13 @@ public class EnemyGun : MonoBehaviour
 {
 
     public GameObject EnemyBullet;
-
+    private float damage;
     public float speed;
 
     // Use this for initialization
     void Start()
     {
+        damage = gameObject.GetComponentInParent<Enemy>().damage;
         speed = 2f;
 
         InvokeRepeating("FireEnemyBullet", 0.5f, (5f - gameObject.GetComponentInParent<Enemy>().Level()) / 2);
@@ -33,6 +34,8 @@ public class EnemyGun : MonoBehaviour
         {
             // Instantiate Enemy Bullet
             GameObject bullet = Instantiate(EnemyBullet).gameObject;
+
+            bullet.GetComponent<EnemyBullet>().damage = damage;
 
             // Set bullet's initial pos to enemy gun pos
             bullet.transform.position = transform.position;

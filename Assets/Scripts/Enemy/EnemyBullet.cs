@@ -7,7 +7,6 @@ public class EnemyBullet : MonoBehaviour {
     public float speed;    // The bullet speed
     Vector2 dir;    // The bullet direction
     bool isReady;   // To check if bullet direction is set
-
     public float damage;
 
     // Setting default values
@@ -16,10 +15,10 @@ public class EnemyBullet : MonoBehaviour {
         isReady = false;
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
-	}
+    }
 
     // Function to set Bullet's direction
     public void SetDirection(Vector2 direction)
@@ -29,10 +28,10 @@ public class EnemyBullet : MonoBehaviour {
         isReady = true;
     }
 
-	// Update is called once per frame
-	void Update ()
+  // Update is called once per frame
+  void Update ()
     {
-	    if (isReady)
+      if (isReady)
         {
             // get Bullet's current position
             Vector2 position = transform.position;
@@ -57,7 +56,7 @@ public class EnemyBullet : MonoBehaviour {
                 Destroy(gameObject);
             }
         }
-	}
+  }
 
     private void OnCollisionEnter2D(Collision2D other)
     {

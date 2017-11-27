@@ -82,7 +82,7 @@ public class PlayerControl : MonoBehaviour {
     }
 
     public void Die() {
-      //Debug.Log("YOU LOSE!");
+      Debug.Log("YOU LOSE!");
       Destroy(gameObject);
       UnityEditor.EditorApplication.isPlaying = false;
       return;
@@ -98,7 +98,6 @@ public class PlayerControl : MonoBehaviour {
 
       if (other.gameObject.tag == "EnemyShip") {
         Destroy(other.gameObject);
-        Destroy(gameObject);
         Die();
       }
     }
