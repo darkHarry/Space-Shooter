@@ -24,6 +24,12 @@ public class Enemy : MonoBehaviour {
   }
 
   void Update () {
+    float scaleFactor = Mathf.Sqrt(Level());
+    Vector3 scale = new Vector3(scaleFactor, scaleFactor, transform.localScale.z);
+    if (transform.localScale != scale) {
+      transform.localScale = Vector3.Slerp(transform.localScale, scale, 0.1f);
+    }
+
     requiredPosition += Vector3.down * 0.2f * Time.deltaTime;
 
     // Top screen Vector
@@ -69,6 +75,7 @@ public class Enemy : MonoBehaviour {
   }
 
   public void Die() {
+
     if (!parent && Level() == 4) {
       // MOTHERSHIP IS DESTROYED, ALL HOPE IS LOST
       Debug.Log("YOU WIN!");
@@ -153,7 +160,7 @@ public class Enemy : MonoBehaviour {
     } else if (parentEnemy.rightChild == gameObject) {
       parentEnemy.rightChild = child;
     } else {
-      // |
+      // BUG: IDHAR HI HAI SAB
       Debug.Log("WO WALA BUG");
       UnityEditor.EditorApplication.isPaused = true;
     }

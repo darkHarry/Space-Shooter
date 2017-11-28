@@ -167,7 +167,7 @@ MonoBehaviour:
   leftChild: {fileID: 0}
   rightChild: {fileID: 0}
   maximumHealth: 100
-  damage: 5
+  damage: 15
   requiredPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &212821065130191592
 SpriteRenderer:

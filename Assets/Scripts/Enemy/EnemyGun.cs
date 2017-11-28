@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyGun : MonoBehaviour
 {
-
     public GameObject EnemyBullet;
     private float damage;
     public float speed;
@@ -34,20 +33,12 @@ public class EnemyGun : MonoBehaviour
         {
             // Instantiate Enemy Bullet
             GameObject bullet = Instantiate(EnemyBullet).gameObject;
+            EnemyBullet eBullet = bullet.GetComponent<EnemyBullet>();
+            eBullet.damage = damage;
+            eBullet.SetDirection(Vector3.down);
+            eBullet.speed = speed;
 
-            bullet.GetComponent<EnemyBullet>().damage = damage;
-
-            // Set bullet's initial pos to enemy gun pos
             bullet.transform.position = transform.position;
-
-            // Compute bullet's downward direction
-            Vector2 direction = Vector3.down;
-
-            // set bullet's direction
-            bullet.GetComponent<EnemyBullet>().SetDirection(direction);
-
-            // set bullet's speed
-            bullet.GetComponent<EnemyBullet>().speed = speed;
-        }
+    }
     }
 }
