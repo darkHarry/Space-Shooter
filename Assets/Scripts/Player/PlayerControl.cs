@@ -36,10 +36,9 @@ public class PlayerControl : MonoBehaviour {
 
 
         float x = Input.GetAxisRaw("Horizontal");   // -1, 0, 1 : left, no input, right
-        float y = Input.GetAxisRaw("Vertical");     // -1, 0, 1 : down, no input, up
 
         // Compute Direction vector from Input and normalise it to get Unit Vector
-        Vector2 direction = new Vector2(x, y).normalized;
+        Vector2 direction = new Vector2(x, 0).normalized;
 
         // Move player towards the direction
         Move(direction);
@@ -54,7 +53,7 @@ public class PlayerControl : MonoBehaviour {
         // For Player Sprite to remain in screen
 
         max.x -= 0.225f;    // Subtract half width of player sprite from max.x
-        min.x += 0.225f;    // Add half widht of player sprite to min.x
+        min.x += 0.225f;    // Add half width of player sprite to min.x
 
         max.y -= 0.285f;    // Subtract half height of player sprite from max.y
         min.y += 0.285f;    // Add half height of player sprite to min.y
